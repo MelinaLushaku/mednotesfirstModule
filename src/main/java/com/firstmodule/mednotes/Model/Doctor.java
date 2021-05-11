@@ -32,8 +32,12 @@ public class Doctor {
     @Column
     private int role;
 
+    @ManyToOne
+    @JoinColumn(name="depId")
+    private Department departmentid;
+
     public Doctor(){}
-    public Doctor(int doctorId, String doctorName, String doctorSurname, String doctorSpecialization, String department, String email, String password) {
+    public Doctor(int doctorId, String doctorName, String doctorSurname, String doctorSpecialization, String department, String email, String password, Department departmentid) {
         this.doctorId = doctorId;
         this.doctorName = doctorName;
         this.doctorSurname = doctorSurname;
@@ -41,6 +45,7 @@ public class Doctor {
         this.department = department;
         this.email = email;
         this.password = password;
+        this.departmentid = departmentid;
     }
 
     public int getDoctorId() {
