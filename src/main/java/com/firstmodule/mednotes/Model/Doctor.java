@@ -1,6 +1,7 @@
 package com.firstmodule.mednotes.Model;
 
 import com.sun.istack.NotNull;
+import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
 import javax.print.Doc;
@@ -35,9 +36,13 @@ public class Doctor {
     @ManyToOne
     @JoinColumn(name="depId")
     private Department departmentid;
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name="clinicId")
+    private Clinic clinic;
 
     public Doctor(){}
-    public Doctor(int doctorId, String doctorName, String doctorSurname, String doctorSpecialization, String department, String email, String password, Department departmentid) {
+    public Doctor(int doctorId, String doctorName, String doctorSurname, String doctorSpecialization, String department, String email, String password, Department departmentid, Clinic clinic) {
         this.doctorId = doctorId;
         this.doctorName = doctorName;
         this.doctorSurname = doctorSurname;
@@ -46,6 +51,7 @@ public class Doctor {
         this.email = email;
         this.password = password;
         this.departmentid = departmentid;
+        this.clinic = clinic;
     }
 
     public int getDoctorId() {

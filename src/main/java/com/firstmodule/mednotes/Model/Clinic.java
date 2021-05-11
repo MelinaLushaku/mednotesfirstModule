@@ -1,5 +1,8 @@
 package com.firstmodule.mednotes.Model;
+import net.minidev.json.annotate.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Clinic {
@@ -22,6 +25,20 @@ public class Clinic {
 
     @Column
     private int partners;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "clinic")
+    private Set<Doctor> doc;
+    @JsonIgnore
+    public Set<Doctor> getDoc() {
+        return doc;
+    }
+    @JsonIgnore
+    public void setDoctors(Set<Doctor> doc) {
+        this.doc = doc;
+    }
+
+    @OneToOne(mappedBy = "clinic")
+    private Admin admin;
 
     public  Clinic(){}
 

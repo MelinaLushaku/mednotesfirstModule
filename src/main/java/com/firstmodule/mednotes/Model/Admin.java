@@ -15,14 +15,20 @@ public class Admin {
     @Column
     private String email;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "clinic_id")
+    private Clinic clinic;
+
+
     @Column
     private String password;
     public Admin (){}
-    public Admin(int adminID, String adminName, String email, String password) {
+    public Admin(int adminID, String adminName, String email, String password, Clinic clinic) {
         this.adminID = adminID;
         this.adminName = adminName;
         this.email = email;
         this.password = password;
+        this.clinic = clinic;
     }
 
     public int getAdminID() {
