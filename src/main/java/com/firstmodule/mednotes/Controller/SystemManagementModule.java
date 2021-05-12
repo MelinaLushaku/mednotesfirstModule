@@ -1,5 +1,6 @@
 package com.firstmodule.mednotes.Controller;
 
+import com.firstmodule.mednotes.Helper.RegisterHelper;
 import com.firstmodule.mednotes.Model.Admin;
 import com.firstmodule.mednotes.Model.Doctor;
 import com.firstmodule.mednotes.Model.Patient;
@@ -28,12 +29,12 @@ public class SystemManagementModule {
         }
             return ResponseEntity.ok("This user doesnt exists!");
 
-
-
-
-
-
-
     }
+
+  /*  @PostMapping("registerUser")
+    public ResponseEntity registerU(@RequestBody RegisterHelper rh){
+        RegisterHelper rh2 = new RegisterHelper.RegisterHelperBuilder(rh.getName(), rh.getSurname() ,
+                rh.getEmail() , rh.getRole(), )
+    }*/
 
 }

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.print.Doc;
 @Service
-public class UserServices {
+public class UserServices implements UserServiceInterface {
     @Autowired
     private AdminRepository adminRepository;
     @Autowired
@@ -43,5 +43,14 @@ public class UserServices {
             return null;
         }
         return p;
+    }
+
+    @Override
+    public void registerD(Doctor d) {
+        doctorRepository.save(d);
+    }
+    @Override
+    public void registerP(Patient p){
+        patientRepository.save(p);
     }
 }

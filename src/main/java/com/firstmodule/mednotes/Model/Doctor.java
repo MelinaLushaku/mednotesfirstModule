@@ -12,6 +12,8 @@ public class Doctor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private int doctorId;
+    @Column
+    private int personalNumber;
 
     @Column
     private String doctorName;
@@ -42,7 +44,7 @@ public class Doctor {
     private Clinic clinic;
 
     public Doctor(){}
-    public Doctor(int doctorId, String doctorName, String doctorSurname, String doctorSpecialization, String department, String email, String password, Department departmentid, Clinic clinic) {
+    public Doctor(int doctorId, String doctorName, String doctorSurname, String doctorSpecialization, String department, String email, String password, Department departmentid, Clinic clinic , int personalNumber) {
         this.doctorId = doctorId;
         this.doctorName = doctorName;
         this.doctorSurname = doctorSurname;
@@ -52,6 +54,15 @@ public class Doctor {
         this.password = password;
         this.departmentid = departmentid;
         this.clinic = clinic;
+        this.personalNumber = personalNumber;
+    }
+
+    public int getPersonalNumber() {
+        return personalNumber;
+    }
+
+    public void setPersonalNumber(int personalNumber) {
+        this.personalNumber = personalNumber;
     }
 
     public int getDoctorId() {
