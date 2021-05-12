@@ -29,15 +29,19 @@ public class Department {
         this.doctor = doctor;
     }
 
+    @JsonIgnore
+   @ManyToOne
+   @JoinColumn(name="cID")
+   private Clinic clinic;
 
     public Department(){}
 
-    public Department (int depId,String depName, int numOfRooms ){
+    public Department (int depId,String depName, int numOfRooms,Clinic clinic ){
       depId=depId;
         this.depName=depName;
         this.numOfRooms=numOfRooms;
+        this.clinic=clinic;
     }
-
 
     public int getDepId() {
         return depId;
@@ -51,6 +55,8 @@ public class Department {
         return numOfRooms;
     }
 
+
+
     public void setDepName(String depName) {
         this.depName = depName;
     }
@@ -58,4 +64,6 @@ public class Department {
     public void setNumOfRooms(int numOfRooms) {
         this.numOfRooms = numOfRooms;
     }
+
+
 }

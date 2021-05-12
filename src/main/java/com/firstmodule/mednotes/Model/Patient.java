@@ -1,7 +1,11 @@
 package com.firstmodule.mednotes.Model;
 
 
+
+import net.minidev.json.annotate.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.Set;
 
 
 @Entity
@@ -26,17 +30,27 @@ public class Patient {
     @Column(nullable = false)
     private int role;
 
+
+    @ManyToOne
+    @JoinColumn(name="clinicID")
+   public Clinic clinic;
+
+
+
     public Patient(){}
 
-    public Patient (int pId,String name, String surname,String email,int personalNumber,String password,int role){
-       pId=pId;
+    public Patient (int pId,String name, String surname,String email,int personalNumber,String password,int role, Clinic clinic){
+       this.pId=pId;
        this.name=name;
        this.surname=surname;
        this.email=email;
        this.personalNumber=personalNumber;
        this.password=password;
        this.role=role;
+ this.clinic=clinic;
     }
+
+
     public int getpId() {
         return pId;
     }
@@ -64,6 +78,7 @@ public class Patient {
         return role;
     }
 
+
     public void setName(String name) {
         this.name = name;
     }
@@ -87,4 +102,6 @@ public class Patient {
     public void setRole(int role) {
         this.role = role;
     }
+
+
 }
