@@ -44,8 +44,8 @@ public class Doctor {
     private Clinic clinic;
 
     public Doctor(){}
-    public Doctor(int doctorId, String doctorName, String doctorSurname, String doctorSpecialization, String department, String email, String password, Department departmentid, Clinic clinic , int personalNumber) {
-        this.doctorId = doctorId;
+    public Doctor(String doctorName, String doctorSurname, String doctorSpecialization, String department, String email, String password, Department departmentid, Clinic clinic , int personalNumber, int role) {
+
         this.doctorName = doctorName;
         this.doctorSurname = doctorSurname;
         this.doctorSpecialization = doctorSpecialization;
@@ -55,6 +55,7 @@ public class Doctor {
         this.departmentid = departmentid;
         this.clinic = clinic;
         this.personalNumber = personalNumber;
+        this.role = role;
     }
 
     public int getPersonalNumber() {

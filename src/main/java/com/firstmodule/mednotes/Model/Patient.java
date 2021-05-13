@@ -39,8 +39,7 @@ public class Patient {
 
     public Patient(){}
 
-    public Patient (int pId,String name, String surname,String email,int personalNumber,String password,int role, Clinic clinic){
-       this.pId=pId;
+    public Patient (String name, String surname,String email,int personalNumber,String password,int role, Clinic clinic){
        this.name=name;
        this.surname=surname;
        this.email=email;
