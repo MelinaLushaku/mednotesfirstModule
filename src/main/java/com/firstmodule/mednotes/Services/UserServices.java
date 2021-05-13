@@ -56,32 +56,68 @@ public class UserServices implements UserServiceInterface {
     public void registerP(Patient p){
         patientRepository.save(p);
     }
-
+    @Override
     public Optional<Department> finDepById(int id){
         Optional<Department> dep = this.departmentRepository.findById(id);
         return dep;
     }
-
+    @Override
     public Optional<Clinic> finClinById(int id){
         Optional<Clinic> cl = this.clinicRepository.findById(id);
         return cl;
     }
-
+    @Override
     public List<Doctor> findDByPN(int nrPersonal){
         List <Doctor> lista =this.doctorRepository.findDByPersonalNumber(nrPersonal);
         return lista;
     }
+    @Override
     public List<Patient> findPByPN(int nrPersonal){
         List <Patient> lista =this.patientRepository.findPByPersonalNumber(nrPersonal);
         return lista;
     }
+    @Override
     public List<Patient> findPatientByEmail(String email){
         List <Patient> lista =this.patientRepository.findPatientByEmail(email);
         return lista;
     }
+    @Override
     public List<Doctor> findDoctorByEmail(String email){
         List <Doctor> lista =this.doctorRepository.findDoctorByEmail(email);
         return lista;
     }
+    @Override
+    public void deleteDoctor(Doctor d){
+        this.doctorRepository.delete(d);
 
+    }
+    @Override
+    public void deletePatient(Patient p){
+        this.patientRepository.delete(p);
+    }
+    @Override
+    public List<Doctor> findAllD(){
+        return this.doctorRepository.findAll();
+    }
+    @Override
+    public List<Patient> findAllP(){
+        return this.patientRepository.findAll();
+    }
+    @Override
+    public int getTotalDoctor(){
+        List <Doctor> doc = this.doctorRepository.findAll();
+        return  doc.size();
+
+    }
+    @Override
+    public int getTotalPatient(){
+        List <Patient> pat = this.patientRepository.findAll();
+        return  pat.size();
+    }
+
+    @Override
+    public int getTotalDep(){
+        List <Department> dep = this.departmentRepository.findAll();
+        return  dep.size();
+    }
 }

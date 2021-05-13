@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.print.Doc;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,9 +42,11 @@ public class SystemManagementModule {
                Optional<Clinic> c = this.us.finClinById(3);
                if (dep.isPresent()) {
                    List<Doctor> listt = this.us.findDByPN(rh.getPersonalNumber());
-                   if(listt.size() == 0){
+                   List<Patient> lista = this.us.findPByPN(rh.getPersonalNumber());
+                   if(listt.size() == 0 && lista.size() == 0){
                        List<Doctor> lista2 = this.us.findDoctorByEmail(rh.getEmail());
-                       if(lista2.size() == 0){
+                       List<Patient>lista3 = this.us.findPatientByEmail(rh.getEmail());
+                       if(lista2.size() == 0 && lista3.size() == 0){
                    Doctor d = new Doctor(rh.getName(), rh.getSurname(), rh.getSpecializationD(), rh.getDepartmentD(), rh.getEmail(), rh.getPassword(), dep.get(), c.get(), rh.getPersonalNumber(), rh.getRole());
                    this.us.registerD(d);
                    return ResponseEntity.ok("Welcome to MedNotes");}
@@ -57,9 +60,11 @@ public class SystemManagementModule {
            } else if (rh.getRole() == 2) {
                Optional<Clinic> c = this.us.finClinById(3);
                List<Patient> lista = this.us.findPByPN(rh.getPersonalNumber());
-               if(lista.size() ==0){
+               List<Doctor> listt = this.us.findDByPN(rh.getPersonalNumber());
+               if(lista.size() ==0 && listt.size() == 0){
                    List<Patient>lista2 = this.us.findPatientByEmail(rh.getEmail());
-                   if(lista2.size() == 0){
+                   List<Doctor> lista3 = this.us.findDoctorByEmail(rh.getEmail());
+                   if(lista2.size() == 0 && lista3.size() == 0){
                Patient p = new Patient(rh.getName(), rh.getSurname(), rh.getEmail(), rh.getPersonalNumber(), rh.getPassword(), rh.getRole(), c.get());
 
                this.us.registerP(p);
@@ -74,5 +79,46 @@ public class SystemManagementModule {
            return ResponseEntity.ok("Fill all the fields");
 
     }
+
+    @PostMapping("/admin/deleteUser/{personalNumber}")
+    public ResponseEntity deleteUser(@PathVariable int personalNumber){
+        List<Doctor> doc = this.us.findDByPN(personalNumber);
+        List<Patient> pat = this.us.findPByPN(personalNumber);
+        if(doc.size() == 0 && pat.size() == 0){
+            return ResponseEntity.ok("There is no user with this personal number!");
+        }else if(doc.size() !=0){
+            Doctor d = doc.get(0);
+            this.us.deleteDoctor(d);
+            return ResponseEntity.ok("Doctor with personalNumber:"+personalNumber+"is deleted");
+        }else {
+            Patient p = pat.get(0);
+            this.us.deletePatient(p);
+            return ResponseEntity.ok("Patient with personalNumber:"+personalNumber+"is deleted");
+        }
+
+    }
+    @GetMapping("/admin/totalNumberOfDoc")
+    public ResponseEntity totalDoc(){
+        int totalD = this.us.getTotalDoctor();
+        return ResponseEntity.ok(totalD);
+    }
+    @GetMapping("/admin/totalNumberOfPat")
+    public ResponseEntity totalPat(){
+        int totalP = this.us.getTotalPatient();
+        return ResponseEntity.ok(totalP);
+    }
+    @GetMapping("/admin/totalNumberOfUser")
+    public ResponseEntity totalUsers(){
+        int totalD = this.us.getTotalDoctor();
+        int totalP = this.us.getTotalPatient();
+        int totalU = totalD+totalP;
+        return ResponseEntity.ok(totalU);
+    }
+    @GetMapping("/admin/totalNumberOfDep")
+    public ResponseEntity totalDep(){
+        int totalDep = this.us.getTotalDep();
+        return ResponseEntity.ok(totalDep);
+    }
+
 
 }
