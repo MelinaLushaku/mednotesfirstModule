@@ -26,5 +26,9 @@ public interface UserServiceInterface {
     List<Doctor> findAllD();
     List<Patient> findAllP();
     List<Department> findAllDep();
+    void addDepartment(Department d);
+    List<Department> findByName(String name);
+    void deleteDep(Department d);
+
 
 }

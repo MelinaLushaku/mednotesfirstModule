@@ -21,11 +21,11 @@ public class Department {
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "department")
     private Set<Doctor> doctor;
-    @JsonIgnore
+
     public Set<Doctor> getDoc() {
         return doctor;
     }
-    @JsonIgnore
+
     public void setDoctors(Set<Doctor> doctor) {
         this.doctor = doctor;
     }
@@ -37,8 +37,8 @@ public class Department {
 
     public Department(){}
 
-    public Department (int depId,String depName, int numOfRooms,Clinic clinic ){
-      depId=depId;
+    public Department (String depName, int numOfRooms,Clinic clinic ){
+
         this.depName=depName;
         this.numOfRooms=numOfRooms;
         this.clinic=clinic;

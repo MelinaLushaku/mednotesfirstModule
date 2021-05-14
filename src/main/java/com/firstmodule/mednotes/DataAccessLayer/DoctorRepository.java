@@ -17,4 +17,7 @@ public interface DoctorRepository extends JpaRepository<Doctor, Integer> {
 
     @Query("select d from Doctor d where d.personalNumber=?1 ")
     List<Doctor> findDByPersonalNumber(int nrPersonal);
+
+
+
 }

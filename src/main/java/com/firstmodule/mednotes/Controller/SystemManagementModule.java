@@ -1,5 +1,6 @@
 package com.firstmodule.mednotes.Controller;
 
+import com.firstmodule.mednotes.Helper.DepartmentHelper;
 import com.firstmodule.mednotes.Helper.RegisterHelper;
 import com.firstmodule.mednotes.Model.*;
 import com.firstmodule.mednotes.Services.UserServices;
@@ -124,7 +125,7 @@ public class SystemManagementModule {
         int totalDep = this.us.getTotalDep();
         return ResponseEntity.ok(totalDep);
     }
-
+    //error per pk edhe fk
     @GetMapping("/admin/ListOfDep")
     public ResponseEntity listOfDep() {
         List<Department> list = this.us.findAllDep();
@@ -134,4 +135,26 @@ public class SystemManagementModule {
             return ResponseEntity.ok(list);
         }
     }
-}
+    @PostMapping("/admin/addDep")
+    public ResponseEntity addDepartment(@RequestBody DepartmentHelper departmentHelper){
+        Optional<Clinic> cc = this.us.finClinById(3);
+        List<Department> lista =this.us.findByName(departmentHelper.getDepName());
+        if(lista.size() == 0) {
+            Department d = new Department(departmentHelper.getDepName(), departmentHelper.getNumberOfRooms(), cc.get());
+            this.us.addDepartment(d);
+            return ResponseEntity.ok("Department added successfully");
+        }
+        return ResponseEntity.ok("This Department Exists");
+    }
+    //error per pk edhe fk
+    @PostMapping ("/admin/deleteDep/{depName}")
+    public ResponseEntity deleteDepartment(@PathVariable String depName ){
+        List<Department> dep = this.us.findByName(depName);
+        if(dep.size() != 0){
+            this.us.deleteDep(dep.get(0));
+            return ResponseEntity.ok("Department deleted successfully!");
+        }
+        return ResponseEntity.ok("This department doesn't exists!");
+        }
+    }
+

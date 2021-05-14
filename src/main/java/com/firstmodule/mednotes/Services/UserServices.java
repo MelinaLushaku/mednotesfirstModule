@@ -50,11 +50,11 @@ public class UserServices implements UserServiceInterface {
 
     @Override
     public void registerD(Doctor d) {
-        doctorRepository.save(d);
+        this.doctorRepository.save(d);
     }
     @Override
     public void registerP(Patient p){
-        patientRepository.save(p);
+        this.patientRepository.save(p);
     }
     @Override
     public Optional<Department> finDepById(int id){
@@ -125,4 +125,21 @@ public class UserServices implements UserServiceInterface {
     public List <Department>findAllDep(){
         return this.departmentRepository.findAll();
     }
-}
+    @Override
+    public void addDepartment(Department d){
+        this.departmentRepository.save(d);
+    }
+    @Override
+    public List<Department> findByName(String name){
+        return  this.departmentRepository.findDepartmentByName(name);
+    }
+    @Override
+    public void deleteDep(Department d){
+        this.departmentRepository.delete(d);
+    }
+
+
+
+
+    }
+
