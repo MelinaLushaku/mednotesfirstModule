@@ -103,6 +103,7 @@ public class UserServices implements UserServiceInterface {
     public List<Patient> findAllP(){
         return this.patientRepository.findAll();
     }
+
     @Override
     public int getTotalDoctor(){
         List <Doctor> doc = this.doctorRepository.findAll();
@@ -119,5 +120,9 @@ public class UserServices implements UserServiceInterface {
     public int getTotalDep(){
         List <Department> dep = this.departmentRepository.findAll();
         return  dep.size();
+    }
+    @Override
+    public List <Department>findAllDep(){
+        return this.departmentRepository.findAll();
     }
 }

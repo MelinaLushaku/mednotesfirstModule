@@ -17,6 +17,7 @@ public interface UserServiceInterface {
     List<Patient> findPByPN(int nrPersonal);
     List<Patient> findPatientByEmail(String email);
     List<Doctor> findDoctorByEmail(String email);
+
     void deleteDoctor(Doctor d);
     void deletePatient(Patient p);
     int getTotalPatient();
@@ -24,5 +25,6 @@ public interface UserServiceInterface {
     int getTotalDep();
     List<Doctor> findAllD();
     List<Patient> findAllP();
+    List<Department> findAllDep();
 
 }

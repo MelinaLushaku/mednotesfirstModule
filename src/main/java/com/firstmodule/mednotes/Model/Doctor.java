@@ -35,6 +35,7 @@ public class Doctor {
     @Column
     private int role;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="depId")
     private Department departmentid;

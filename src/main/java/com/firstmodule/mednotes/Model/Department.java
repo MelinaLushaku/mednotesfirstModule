@@ -18,6 +18,7 @@ public class Department {
     @Column(nullable = false)
     private int numOfRooms;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "department")
     private Set<Doctor> doctor;
     @JsonIgnore
