@@ -21,6 +21,8 @@ public class UserServices implements UserServiceInterface {
     private DepartmentRepository departmentRepository;
     @Autowired
     private ClinicRepository clinicRepository;
+    @Autowired
+    private AdvertisementRepository advertisementRepository;
 
 
 
@@ -138,8 +140,23 @@ public class UserServices implements UserServiceInterface {
         this.departmentRepository.delete(d);
     }
 
-
-
-
+    @Override
+    public void addAdvert(Advertisement a){
+        this.advertisementRepository.save(a);
     }
+    @Override
+    public void deleteAdvert(Advertisement a){
+        this.advertisementRepository.delete(a);
+    }
+    @Override
+    public List<Advertisement> getByTitle(String title){
+        return this.advertisementRepository.findByTitle(title);
+    }
+    public Admin getByName(String name){
+        return this.adminRepository.findAdminByName(name);
+    }
+
+
+
+}
 

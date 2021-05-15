@@ -15,14 +15,20 @@ public class Advertisement {
     @Column(nullable=false)
     private String aPath;
 
+    @ManyToOne
+    @JoinColumn(name="adminID")
+    public Admin admin;
+
+
     public  Advertisement(){}
 
-    public Advertisement(int aID, String title, String aPath){
-        this.aID=aID;
+    public Advertisement(String title, String aPath, Admin admin){
+
         this.title=title;
         this.aPath=aPath;
+        this.admin = admin;
     }
-    public  int getaID(){
+    public  int getAID(){
         return aID;
     }
     public  String getTitle(){
@@ -32,11 +38,11 @@ public class Advertisement {
         return aPath;
     }
 
-    public void setaID(int aID) {
+    public void setAID(int aID) {
         this.aID = aID;
     }
 
-    public void setaPath(String aPath) {
+    public void setAPath(String aPath) {
         this.aPath = aPath;
     }
 

@@ -1,6 +1,9 @@
 package com.firstmodule.mednotes.Model;
 
+import net.minidev.json.annotate.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Admin {
@@ -19,6 +22,16 @@ public class Admin {
     @JoinColumn(name = "clinic_id")
     private Clinic clinic;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "admin")
+    private Set<Advertisement> add;
+
+    public Set<Advertisement> getAdvertisement() {
+        return add;
+    }
+
+    public void setDoctors(Set<Advertisement> add) {
+        this.add = add;
+    }
 
     @Column
     private String password;

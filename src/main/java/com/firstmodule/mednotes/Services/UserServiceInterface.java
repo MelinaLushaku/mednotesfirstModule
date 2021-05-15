@@ -17,7 +17,6 @@ public interface UserServiceInterface {
     List<Patient> findPByPN(int nrPersonal);
     List<Patient> findPatientByEmail(String email);
     List<Doctor> findDoctorByEmail(String email);
-
     void deleteDoctor(Doctor d);
     void deletePatient(Patient p);
     int getTotalPatient();
@@ -29,6 +28,10 @@ public interface UserServiceInterface {
     void addDepartment(Department d);
     List<Department> findByName(String name);
     void deleteDep(Department d);
+    void addAdvert(Advertisement a);
+    void deleteAdvert(Advertisement a);
+    List<Advertisement> getByTitle(String title);
+    Admin getByName(String name);
 
 
 }

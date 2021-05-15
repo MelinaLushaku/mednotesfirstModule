@@ -125,6 +125,7 @@ public class SystemManagementModule {
         int totalDep = this.us.getTotalDep();
         return ResponseEntity.ok(totalDep);
     }
+
     //error per pk edhe fk
     @GetMapping("/admin/ListOfDep")
     public ResponseEntity listOfDep() {
@@ -135,26 +136,53 @@ public class SystemManagementModule {
             return ResponseEntity.ok(list);
         }
     }
+
     @PostMapping("/admin/addDep")
-    public ResponseEntity addDepartment(@RequestBody DepartmentHelper departmentHelper){
+    public ResponseEntity addDepartment(@RequestBody DepartmentHelper departmentHelper) {
         Optional<Clinic> cc = this.us.finClinById(3);
-        List<Department> lista =this.us.findByName(departmentHelper.getDepName());
-        if(lista.size() == 0) {
+        List<Department> lista = this.us.findByName(departmentHelper.getDepName());
+        if (lista.size() == 0) {
             Department d = new Department(departmentHelper.getDepName(), departmentHelper.getNumberOfRooms(), cc.get());
             this.us.addDepartment(d);
             return ResponseEntity.ok("Department added successfully");
         }
         return ResponseEntity.ok("This Department Exists");
     }
+
     //error per pk edhe fk
-    @PostMapping ("/admin/deleteDep/{depName}")
-    public ResponseEntity deleteDepartment(@PathVariable String depName ){
+    @PostMapping("/admin/deleteDep/{depName}")
+    public ResponseEntity deleteDepartment(@PathVariable String depName) {
         List<Department> dep = this.us.findByName(depName);
-        if(dep.size() != 0){
+        if (dep.size() != 0) {
             this.us.deleteDep(dep.get(0));
             return ResponseEntity.ok("Department deleted successfully!");
         }
         return ResponseEntity.ok("This department doesn't exists!");
-        }
     }
+
+    @PostMapping("/admin/deleteAdvert/{advertName}")
+    public ResponseEntity deleteAdvert(@PathVariable String advertName) {
+     List<Advertisement> l = this.us.getByTitle(advertName);
+     if(l.size() != 0){
+         this.us.deleteAdvert(l.get(0));
+         return ResponseEntity.ok("Advertisement with title"+advertName+"is deleted successfully!");
+     }
+        return ResponseEntity.ok("Advertisement with title"+advertName+"doesn't exists!");
+    }
+
+    @PostMapping("/admin/addAdvert/{advertName}/{aPath}")
+    public ResponseEntity addAdvert(@PathVariable String advertName, @PathVariable String aPath) {
+      List<Advertisement> l = this.us.getByTitle(advertName);
+      if(l.size() != 0){
+          return ResponseEntity.ok("This Advertisement already exits!");
+      }
+      else{
+          Admin a = this.us.getByName("Admin");
+          Advertisement d = new Advertisement(advertName, aPath , a);
+          this.us.addAdvert(d);
+          return ResponseEntity.ok("Advertisement added successfully ");
+      }
+
+    }
+}
 
