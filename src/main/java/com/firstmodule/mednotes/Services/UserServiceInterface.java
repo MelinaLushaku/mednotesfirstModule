@@ -32,6 +32,7 @@ public interface UserServiceInterface {
     void deleteAdvert(Advertisement a);
     List<Advertisement> getByTitle(String title);
     Admin getByName(String name);
+    void updateClinicsInfos(String address , String phone , String email , int nrPartners);
 
 
 }

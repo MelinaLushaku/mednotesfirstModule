@@ -155,7 +155,16 @@ public class UserServices implements UserServiceInterface {
     public Admin getByName(String name){
         return this.adminRepository.findAdminByName(name);
     }
+    @Override
+    public void updateClinicsInfos(String address , String phone , String email , int nrPartners){
+        Clinic c = this.clinicRepository.getClinicByName("MedNotes");
+        c.setAdrres(address);
+        c.setEmail(email);
+        c.setPartners(nrPartners);
+        c.setPhone(phone);
+        this.clinicRepository.save(c);
 
+    }
 
 
 }

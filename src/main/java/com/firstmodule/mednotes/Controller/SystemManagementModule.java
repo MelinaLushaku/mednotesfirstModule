@@ -4,7 +4,9 @@ import com.firstmodule.mednotes.Helper.DepartmentHelper;
 import com.firstmodule.mednotes.Helper.RegisterHelper;
 import com.firstmodule.mednotes.Model.*;
 import com.firstmodule.mednotes.Services.UserServices;
+import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.system.ApplicationHome;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -183,6 +185,11 @@ public class SystemManagementModule {
           return ResponseEntity.ok("Advertisement added successfully ");
       }
 
+    }
+    @PostMapping("/admin/addClinicInfor/{adresa}/{nrTel}/{emaili}/{partnes}")
+    public ResponseEntity editClinicInfo(@PathVariable String adresa , @PathVariable String nrTel , @PathVariable String emaili , @PathVariable int partnes){
+        this.us.updateClinicsInfos(adresa, nrTel , emaili , partnes);
+        return ResponseEntity.ok("Clinic edited successfully");
     }
 }
 
