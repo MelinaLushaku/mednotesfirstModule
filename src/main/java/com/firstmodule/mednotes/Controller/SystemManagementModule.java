@@ -198,5 +198,12 @@ public class SystemManagementModule {
         return ResponseEntity.ok(this.us.getAllC());
     }
 
+
+    @PostMapping("/admin/editDep/{depName}/{numberOfRooms}")
+    public ResponseEntity editDepInfo(@PathVariable String depName , @PathVariable int numberOfRooms){
+        this.us.editDep(depName , numberOfRooms);
+        return ResponseEntity.ok("Department edited successfully!");
+    }
+
 }
 

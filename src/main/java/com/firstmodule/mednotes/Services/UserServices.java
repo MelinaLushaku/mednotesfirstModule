@@ -165,11 +165,17 @@ public class UserServices implements UserServiceInterface {
         this.clinicRepository.save(c);
 
     }
-
+    @Override
     public List<Clinic> getAllC(){
         return this.clinicRepository.findAll();
     }
+    @Override
+    public void editDep(String name, int nrDhomav){
+        List<Department> dep = this.departmentRepository.findDepartmentByName(name);
+        Department d = dep.get(0);
+        d.setNumOfRooms(nrDhomav);
 
+    }
 
 }
 
