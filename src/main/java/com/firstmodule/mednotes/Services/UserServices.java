@@ -166,6 +166,10 @@ public class UserServices implements UserServiceInterface {
 
     }
 
+    public List<Clinic> getAllC(){
+        return this.clinicRepository.findAll();
+    }
+
 
 }
 

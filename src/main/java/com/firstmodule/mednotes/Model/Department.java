@@ -21,14 +21,12 @@ public class Department {
     @JsonIgnore
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "department")
-    private Set<Doctor> doctor;
-
+    private Set<Doctor> doc;
     public Set<Doctor> getDoc() {
-        return doctor;
+        return doc;
     }
-
-    public void setDoctors(Set<Doctor> doctor) {
-        this.doctor = doctor;
+    public void setDoctors(Set<Doctor> doc) {
+        this.doc = doc;
     }
 
     @JsonIgnore

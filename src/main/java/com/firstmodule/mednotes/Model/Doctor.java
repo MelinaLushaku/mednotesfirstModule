@@ -22,7 +22,7 @@ public class Doctor {
     private String doctorSpecialization;
 
     @Column
-    private String department;
+    private String departmentN;
 
     @Column
     private String email;
@@ -35,22 +35,22 @@ public class Doctor {
 
     @ManyToOne
     @JoinColumn(name="depId")
-    private Department departmentid;
+    private Department department;
 
     @ManyToOne
     @JoinColumn(name="clinicId")
     private Clinic clinic;
 
     public Doctor(){}
-    public Doctor(String doctorName, String doctorSurname, String doctorSpecialization, String department, String email, String password, Department departmentid, Clinic clinic , int personalNumber, int role) {
+    public Doctor(String doctorName, String doctorSurname, String doctorSpecialization, String departmentN, String email, String password, Department department, Clinic clinic , int personalNumber, int role) {
 
         this.doctorName = doctorName;
         this.doctorSurname = doctorSurname;
         this.doctorSpecialization = doctorSpecialization;
-        this.department = department;
+        this.departmentN = departmentN;
         this.email = email;
         this.password = password;
-        this.departmentid = departmentid;
+        this.department = department;
         this.clinic = clinic;
         this.personalNumber = personalNumber;
         this.role = role;
@@ -92,12 +92,12 @@ public class Doctor {
         this.doctorSpecialization = doctorSpecialization;
     }
 
-    public String getDepartment() {
-        return department;
+    public String getDepartmentN() {
+        return departmentN;
     }
 
-    public void setDepartment(String department) {
-        this.department = department;
+    public void setDepartmentN(String departmentN) {
+        this.departmentN = departmentN;
     }
 
     public String getEmail() {

@@ -191,5 +191,12 @@ public class SystemManagementModule {
         this.us.updateClinicsInfos(adresa, nrTel , emaili , partnes);
         return ResponseEntity.ok("Clinic edited successfully");
     }
+
+    @GetMapping("/admin/getClinic")
+    public ResponseEntity getClinicInfo(){
+
+        return ResponseEntity.ok(this.us.getAllC());
+    }
+
 }
 
