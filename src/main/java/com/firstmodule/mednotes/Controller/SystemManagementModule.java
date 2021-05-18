@@ -32,10 +32,13 @@ public class SystemManagementModule {
             AdminResponse ar = new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("List e Suksesshme").setData(a).build();
             return ar;
         } else if (d.isPresent()) {
-            AdminResponse ar = new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("List e Suksesshme").setData(d).build();
+            int roli = d.get().getRole();
+
+            AdminResponse ar = new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("Roli:"+roli).setData(d).build();
             return ar;
         } else if (p.isPresent()) {
-            AdminResponse ar = new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("List e Suksesshme").setData(p).build();
+            int roli = p.get().getRole();
+            AdminResponse ar = new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("Roli:"+roli).setData(p).build();
             return ar;
         }
          AdminResponse ar = new AdminResponse.AdminResponseBuilder<>(401).setErrorin("This User doesn't exists").build();
@@ -44,7 +47,7 @@ public class SystemManagementModule {
     }
 
     @PostMapping("registerUser")
-    public ResponseEntity registerU(@RequestBody RegisterHelper rh) {
+    public AdminResponse registerU(@RequestBody RegisterHelper rh) {
 
         if (!rh.getName().isEmpty() && !rh.getSurname().isEmpty() && !rh.getEmail().isEmpty() && !rh.getPassword().isEmpty() && rh.getPersonalNumber() != 0) {
             if (rh.getRole() == 1 && !rh.getSpecializationD().isEmpty() && !rh.getDepartmentD().isEmpty()) {
@@ -59,14 +62,17 @@ public class SystemManagementModule {
                         if (lista2.size() == 0 && lista3.size() == 0) {
                             Doctor d = new Doctor(rh.getName(), rh.getSurname(), rh.getSpecializationD(), rh.getDepartmentD(), rh.getEmail(), rh.getPassword(), dep.get(), c.get(), rh.getPersonalNumber(), rh.getRole());
                             this.us.registerD(d);
-                            return ResponseEntity.ok("Welcome to MedNotes");
+                           return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("Welcome to MedNotes").setData(d).build();
                         }
-                        return ResponseEntity.ok("This email is being used by someone else");
+                        return new AdminResponse.AdminResponseBuilder<>(401).setErrorin("This email is being used by someone else").build();
+
                     } else {
-                        return ResponseEntity.ok("This personalNumber belongs to someone else");
+                        return new AdminResponse.AdminResponseBuilder<>(401).setErrorin("This personalNumber belongs to someone else").build();
+
                     }
                 } else {
-                    return ResponseEntity.ok("This department doesn't exists");
+                    return new AdminResponse.AdminResponseBuilder<>(401).setErrorin("This department doesn't exists").build();
+
                 }
             } else if (rh.getRole() == 2) {
                 Optional<Clinic> c = this.us.finClinById(3);
@@ -79,15 +85,17 @@ public class SystemManagementModule {
                         Patient p = new Patient(rh.getName(), rh.getSurname(), rh.getEmail(), rh.getPersonalNumber(), rh.getPassword(), rh.getRole(), c.get());
 
                         this.us.registerP(p);
-                        return ResponseEntity.ok("Welcome to MedNotes");
+                        return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("Welcome to MedNotes").setData(p).build();
                     }
-                    return ResponseEntity.ok("This email is being used by someone else");
+                    return new AdminResponse.AdminResponseBuilder<>(401).setErrorin("This email is being used by someone else").build();
+
                 } else {
-                    return ResponseEntity.ok("This personalNumber belongs to someone else");
+                    return new AdminResponse.AdminResponseBuilder<>(401).setErrorin("This personalNumber belongs to someone else").build();
+
                 }
             }
         }
-        return ResponseEntity.ok("Fill all the fields");
+         return new AdminResponse.AdminResponseBuilder<>(401).setErrorin("Please fill all the input fields").build();
 
     }
 

@@ -29,6 +29,7 @@ public class Admin {
     public Set<Advertisement> getAdvertisement() {
         return add;
     }
+    @JsonIgnore
     public void setDoctors(Set<Advertisement> add) {
         this.add = add;
     }

@@ -16,9 +16,9 @@ public class Advertisement {
 
     @Column(nullable=false)
     private String aPath;
-    @JsonIgnore
+
     @ManyToOne
-    @JoinColumn(name="adminID")
+    @JoinColumn(name="admin")
     public Admin admin;
 
 
