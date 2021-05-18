@@ -19,7 +19,6 @@ public class Department {
     private int numOfRooms;
 
     @JsonIgnore
-
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "department")
     private Set<Doctor> doc;
     public Set<Doctor> getDoc() {
@@ -28,7 +27,6 @@ public class Department {
     public void setDoctors(Set<Doctor> doc) {
         this.doc = doc;
     }
-
     @JsonIgnore
    @ManyToOne
    @JoinColumn(name="cID")

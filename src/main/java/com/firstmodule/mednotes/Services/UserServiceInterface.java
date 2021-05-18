@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserServiceInterface {
-    Admin loginA(String username , String pass);
-    Doctor loginD(String username , String pass);
-    Patient loginP(String username , String pass);
+    Optional<Admin> loginA(String username , String pass);
+    Optional<Doctor> loginD(String username , String pass);
+    Optional<Patient> loginP(String username , String pass);
     void registerD(Doctor d);
     void registerP(Patient p);
     Optional<Department> finDepById(int id);

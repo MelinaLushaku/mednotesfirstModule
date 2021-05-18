@@ -17,18 +17,18 @@ public class Admin {
 
     @Column
     private String email;
-
+    @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "clinic_id")
     private Clinic clinic;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "admin")
+    @JsonIgnore
     private Set<Advertisement> add;
-
+    @JsonIgnore
     public Set<Advertisement> getAdvertisement() {
         return add;
     }
-
     public void setDoctors(Set<Advertisement> add) {
         this.add = add;
     }

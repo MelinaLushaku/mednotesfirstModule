@@ -25,43 +25,39 @@ public class Clinic {
 
     @Column
     private int partners;
-
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "clinic")
     private Set<Doctor> doc;
-    @JsonIgnore
     public Set<Doctor> getDoc() {
         return doc;
     }
-    @JsonIgnore
     public void setDoctors(Set<Doctor> doc) {
         this.doc = doc;
     }
-
+    @JsonIgnore
     @OneToOne(mappedBy = "clinic")
     private Admin admin;
 
 @Column
     private int patients;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "clinic")
     private Set<Patient> pat;
-    @JsonIgnore
     public Set<Patient> getPat() {
         return pat;
     }
-    @JsonIgnore
     public void setPatients(Set<Patient> pat) {
         this.pat = pat;
     }
 
     @Column
     private int departments;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "clinic")
     private Set<Department> dep;
-    @JsonIgnore
     public Set<Department> getDep() {
         return dep;
     }
-    @JsonIgnore
     public void setDepartments(Set<Department> dep) {
         this.dep = dep;
     }

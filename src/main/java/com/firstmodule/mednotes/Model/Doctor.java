@@ -1,5 +1,7 @@
 package com.firstmodule.mednotes.Model;
 
+import net.minidev.json.annotate.JsonIgnore;
+
 import javax.persistence.*;
 import javax.print.Doc;
 
@@ -32,11 +34,11 @@ public class Doctor {
     @Column
     private int role;
 
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="depId")
     private Department department;
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="clinicId")
     private Clinic clinic;

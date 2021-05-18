@@ -32,7 +32,7 @@ public class Patient {
 
 
     @ManyToOne
-    @JoinColumn(name="clinicID")
+    @JoinColumn(name="clinic")
    public Clinic clinic;
 
 

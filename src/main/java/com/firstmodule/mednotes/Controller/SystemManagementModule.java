@@ -1,12 +1,13 @@
 package com.firstmodule.mednotes.Controller;
 
+import com.firstmodule.mednotes.Helper.AdminResponse;
 import com.firstmodule.mednotes.Helper.DepartmentHelper;
 import com.firstmodule.mednotes.Helper.RegisterHelper;
 import com.firstmodule.mednotes.Model.*;
-import com.firstmodule.mednotes.Services.UserServices;
-import net.bytebuddy.asm.Advice;
+import com.firstmodule.mednotes.Services.UserServiceInterface;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.system.ApplicationHome;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,25 +15,31 @@ import javax.print.Doc;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping("/api/systemManagement")
 public class SystemManagementModule {
     @Autowired
-    private UserServices us;
+    private UserServiceInterface us;
 
-    @GetMapping("/login/{email}/{password}")
-    public ResponseEntity loginUser(@PathVariable String email, @PathVariable String password) {
-        Admin a = us.loginA(email, password);
-        Doctor d = us.loginD(email, password);
-        Patient p = us.loginP(email, password);
-        if (a != null) {
-            return ResponseEntity.ok(a);
-        } else if (d != null) {
-            return ResponseEntity.ok(d);
-        } else if (p != null) {
-            return ResponseEntity.ok(p);
+    @PostMapping("/login/{email}/{password}")
+    public AdminResponse loginUser(@PathVariable String email, @PathVariable String password) {
+        Optional<Admin> a = us.loginA(email, password);
+        Optional<Doctor> d = us.loginD(email, password);
+        Optional<Patient> p = us.loginP(email, password);
+
+        if (a.isPresent()) {
+            AdminResponse ar = new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("List e Suksesshme").setData(a).build();
+            return ar;
+        } else if (d.isPresent()) {
+            AdminResponse ar = new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("List e Suksesshme").setData(d).build();
+            return ar;
+        } else if (p.isPresent()) {
+            AdminResponse ar = new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("List e Suksesshme").setData(p).build();
+            return ar;
         }
-        return ResponseEntity.ok("This user doesnt exists!");
+         AdminResponse ar = new AdminResponse.AdminResponseBuilder<>(401).setErrorin("This User doesn't exists").build();
+        return ar;
 
     }
 

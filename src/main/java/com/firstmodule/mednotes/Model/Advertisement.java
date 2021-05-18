@@ -1,4 +1,6 @@
 package com.firstmodule.mednotes.Model;
+import net.minidev.json.annotate.JsonIgnore;
+
 import javax.persistence.*;
 
 
@@ -14,7 +16,7 @@ public class Advertisement {
 
     @Column(nullable=false)
     private String aPath;
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="adminID")
     public Admin admin;

@@ -26,24 +26,24 @@ public class UserServices implements UserServiceInterface {
 
 
 
-    public Admin loginA(String username , String pass){
-        Admin a = this.adminRepository.findAdminByUsernameAndPassword(username, pass);
+    public Optional <Admin> loginA(String username , String pass){
+        Optional <Admin> a = this.adminRepository.findAdminByUsernameAndPassword(username, pass);
         if (a == null){
             return null;
         }
         return a;
     }
 
-    public Doctor loginD(String username , String pass){
-        Doctor d = this.doctorRepository.findDoctorByUsernameAndPassword(username, pass);
+    public Optional<Doctor> loginD(String username , String pass){
+        Optional<Doctor> d = this.doctorRepository.findDoctorByUsernameAndPassword(username, pass);
         if (d == null){
             return null;
         }
         return d;
     }
 
-    public Patient loginP(String username , String pass){
-        Patient p = this.patientRepository.findPatientByUsernameAndPassword(username, pass);
+    public Optional<Patient> loginP(String username , String pass){
+        Optional<Patient> p = this.patientRepository.findPatientByUsernameAndPassword(username, pass);
         if (p == null){
             return null;
         }
