@@ -157,12 +157,13 @@ public class UserServices implements UserServiceInterface {
     }
     @Override
     public void updateClinicsInfos(String address , String phone , String email , int nrPartners){
-        Clinic c = this.clinicRepository.getClinicByName("MedNotes");
-        c.setAdrres(address);
-        c.setEmail(email);
-        c.setPartners(nrPartners);
-        c.setPhone(phone);
-        this.clinicRepository.save(c);
+        Optional<Clinic> c = this.clinicRepository.getClinicByName("MedNotes");
+        Clinic ca = c.get();
+        ca.setAdrres(address);
+        ca.setEmail(email);
+        ca.setPartners(nrPartners);
+        ca.setPhone(phone);
+        this.clinicRepository.save(ca);
 
     }
     @Override
@@ -176,6 +177,9 @@ public class UserServices implements UserServiceInterface {
         d.setNumOfRooms(nrDhomav);
 
     }
-
+    @Override
+    public Optional <Clinic> getClinicByName(String name){
+        return  this.clinicRepository.getClinicByName(name);
+    }
 }
 

@@ -17,7 +17,7 @@ public class RegisterHelper implements Serializable {
 
 
     //opsionale veq per mjekun
-    private int dep_id;
+
     private String departmentD;
     private String specializationD;
 
@@ -34,7 +34,7 @@ public class RegisterHelper implements Serializable {
     }
 
 
-    public RegisterHelper(String name, String surname, String email, String password, int role, int personalNumber, int dep_id, String departmentD, String specializationD) {
+    public RegisterHelper(String name, String surname, String email, String password, int role, int personalNumber,  String departmentD, String specializationD) {
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -42,7 +42,7 @@ public class RegisterHelper implements Serializable {
         this.role = role;
         this.personalNumber = personalNumber;
 
-        this.dep_id = dep_id;
+
         this.departmentD = departmentD;
         this.specializationD = specializationD;
     }
@@ -77,9 +77,7 @@ public class RegisterHelper implements Serializable {
 
 
 
-    public int getDep_id() {
-        return dep_id;
-    }
+
 
     public String getDepartmentD() {
         return departmentD;
@@ -115,9 +113,6 @@ public class RegisterHelper implements Serializable {
 
 
 
-    public void setDep_id(int dep_id) {
-        this.dep_id = dep_id;
-    }
 
     public void setDepartmentD(String departmentD) {
         this.departmentD = departmentD;

@@ -5,12 +5,8 @@ import com.firstmodule.mednotes.Helper.DepartmentHelper;
 import com.firstmodule.mednotes.Helper.RegisterHelper;
 import com.firstmodule.mednotes.Model.*;
 import com.firstmodule.mednotes.Services.UserServiceInterface;
-
 import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.print.Doc;
 import java.util.List;
 import java.util.Optional;
@@ -51,16 +47,17 @@ public class SystemManagementModule {
 
         if (!rh.getName().isEmpty() && !rh.getSurname().isEmpty() && !rh.getEmail().isEmpty() && !rh.getPassword().isEmpty() && rh.getPersonalNumber() != 0) {
             if (rh.getRole() == 1 && !rh.getSpecializationD().isEmpty() && !rh.getDepartmentD().isEmpty()) {
-                Optional<Department> dep = this.us.finDepById(rh.getDep_id());
-                Optional<Clinic> c = this.us.finClinById(3);
-                if (dep.isPresent()) {
+                List<Department> dep = this.us.findByName(rh.getDepartmentD());
+               Optional<Clinic> c = this.us.getClinicByName("MedNotes");
+
+                if (dep.size() != 0) {
                     List<Doctor> listt = this.us.findDByPN(rh.getPersonalNumber());
                     List<Patient> lista = this.us.findPByPN(rh.getPersonalNumber());
                     if (listt.size() == 0 && lista.size() == 0) {
                         List<Doctor> lista2 = this.us.findDoctorByEmail(rh.getEmail());
                         List<Patient> lista3 = this.us.findPatientByEmail(rh.getEmail());
                         if (lista2.size() == 0 && lista3.size() == 0) {
-                            Doctor d = new Doctor(rh.getName(), rh.getSurname(), rh.getSpecializationD(), rh.getDepartmentD(), rh.getEmail(), rh.getPassword(), dep.get(), c.get(), rh.getPersonalNumber(), rh.getRole());
+                            Doctor d = new Doctor(rh.getName(), rh.getSurname(), rh.getSpecializationD(), rh.getDepartmentD(), rh.getEmail(), rh.getPassword(), dep.get(0), c.get(), rh.getPersonalNumber(), rh.getRole());
                             this.us.registerD(d);
                            return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("Welcome to MedNotes").setData(d).build();
                         }
@@ -100,124 +97,143 @@ public class SystemManagementModule {
     }
 
     @PostMapping("/admin/deleteUser/{personalNumber}")
-    public ResponseEntity deleteUser(@PathVariable int personalNumber) {
+    public AdminResponse deleteUser(@PathVariable int personalNumber) {
         List<Doctor> doc = this.us.findDByPN(personalNumber);
         List<Patient> pat = this.us.findPByPN(personalNumber);
         if (doc.size() == 0 && pat.size() == 0) {
-            return ResponseEntity.ok("There is no user with this personal number!");
+            return new AdminResponse.AdminResponseBuilder<>(401).setErrorin("There is no user with this personal number!").build();
+
         } else if (doc.size() != 0) {
             Doctor d = doc.get(0);
             this.us.deleteDoctor(d);
-            return ResponseEntity.ok("Doctor with personalNumber:" + personalNumber + "is deleted");
+            return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("Doctor with personalNumber:" + personalNumber + "is deleted").build();
+
         } else {
             Patient p = pat.get(0);
             this.us.deletePatient(p);
-            return ResponseEntity.ok("Patient with personalNumber:" + personalNumber + "is deleted");
+            return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("Patient with personalNumber:" + personalNumber + "is deleted").build();
         }
 
     }
 
     @GetMapping("/admin/totalNumberOfDoc")
-    public ResponseEntity totalDoc() {
+    public AdminResponse totalDoc() {
         int totalD = this.us.getTotalDoctor();
-        return ResponseEntity.ok(totalD);
+         return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("Vlere e Suksesshme").setData(totalD).build();
     }
 
     @GetMapping("/admin/totalNumberOfPat")
-    public ResponseEntity totalPat() {
+    public AdminResponse totalPat() {
         int totalP = this.us.getTotalPatient();
-        return ResponseEntity.ok(totalP);
+       return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("Vlere e sukseshme").setData(totalP).build();
     }
 
     @GetMapping("/admin/totalNumberOfUser")
-    public ResponseEntity totalUsers() {
+    public AdminResponse totalUsers() {
         int totalD = this.us.getTotalDoctor();
         int totalP = this.us.getTotalPatient();
         int totalU = totalD + totalP;
-        return ResponseEntity.ok(totalU);
+        return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("Vlere e sukseshme").setData(totalU).build();
     }
 
     @GetMapping("/admin/totalNumberOfDep")
-    public ResponseEntity totalDep() {
+    public AdminResponse totalDep() {
         int totalDep = this.us.getTotalDep();
-        return ResponseEntity.ok(totalDep);
+        return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("Vlere e sukseshme").setData(totalDep).build();
     }
 
-    //error per pk edhe fk
+
     @GetMapping("/admin/ListOfDep")
-    public ResponseEntity listOfDep() {
+    public AdminResponse listOfDep() {
         List<Department> list = this.us.findAllDep();
         if (list.size() == 0) {
-            return ResponseEntity.ok("There is no department");
+            return new AdminResponse.AdminResponseBuilder<>(401).setErrorin("There is no departments!").build();
         } else {
-            return ResponseEntity.ok(list);
+            return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("List e sukseshme").setData(list).build();
         }
     }
 
     @PostMapping("/admin/addDep")
-    public ResponseEntity addDepartment(@RequestBody DepartmentHelper departmentHelper) {
+    public AdminResponse addDepartment(@RequestBody DepartmentHelper departmentHelper) {
         Optional<Clinic> cc = this.us.finClinById(3);
         List<Department> lista = this.us.findByName(departmentHelper.getDepName());
         if (lista.size() == 0) {
             Department d = new Department(departmentHelper.getDepName(), departmentHelper.getNumberOfRooms(), cc.get());
             this.us.addDepartment(d);
-            return ResponseEntity.ok("Department added successfully");
+            return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("Department added successfully").build();
+
         }
-        return ResponseEntity.ok("This Department Exists");
+        return new AdminResponse.AdminResponseBuilder<>(401).setErrorin("This Department Exists").build();
+
     }
 
     //error per pk edhe fk
     @PostMapping("/admin/deleteDep/{depName}")
-    public ResponseEntity deleteDepartment(@PathVariable String depName) {
+    public AdminResponse deleteDepartment(@PathVariable String depName) {
         List<Department> dep = this.us.findByName(depName);
         if (dep.size() != 0) {
             this.us.deleteDep(dep.get(0));
-            return ResponseEntity.ok("Department deleted successfully!");
+            return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("Department deleted successfully!").build();
+
         }
-        return ResponseEntity.ok("This department doesn't exists!");
+        return new AdminResponse.AdminResponseBuilder<>(401).setErrorin("This department doesn't exists!").build();
+
     }
 
     @PostMapping("/admin/deleteAdvert/{advertName}")
-    public ResponseEntity deleteAdvert(@PathVariable String advertName) {
+    public AdminResponse deleteAdvert(@PathVariable String advertName) {
      List<Advertisement> l = this.us.getByTitle(advertName);
      if(l.size() != 0){
          this.us.deleteAdvert(l.get(0));
-         return ResponseEntity.ok("Advertisement with title"+advertName+"is deleted successfully!");
+         return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("Advertisement with title"+advertName+"is deleted successfully!").build();
+
      }
-        return ResponseEntity.ok("Advertisement with title"+advertName+"doesn't exists!");
+        return new AdminResponse.AdminResponseBuilder<>(401).setErrorin("Advertisement with title"+advertName+"doesn't exists!").build();
+
     }
 
     @PostMapping("/admin/addAdvert/{advertName}/{aPath}")
-    public ResponseEntity addAdvert(@PathVariable String advertName, @PathVariable String aPath) {
+    public AdminResponse addAdvert(@PathVariable String advertName, @PathVariable String aPath) {
       List<Advertisement> l = this.us.getByTitle(advertName);
       if(l.size() != 0){
-          return ResponseEntity.ok("This Advertisement already exits!");
+
+          return new AdminResponse.AdminResponseBuilder<>(401).setErrorin("This Advertisement already exits!").build();
+
       }
       else{
           Admin a = this.us.getByName("Admin");
           Advertisement d = new Advertisement(advertName, aPath , a);
           this.us.addAdvert(d);
-          return ResponseEntity.ok("Advertisement added successfully ");
+          return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("Advertisement added successfully").setData(d).build();
+
+
       }
 
     }
     @PostMapping("/admin/addClinicInfor/{adresa}/{nrTel}/{emaili}/{partnes}")
-    public ResponseEntity editClinicInfo(@PathVariable String adresa , @PathVariable String nrTel , @PathVariable String emaili , @PathVariable int partnes){
+    public AdminResponse editClinicInfo(@PathVariable String adresa , @PathVariable String nrTel , @PathVariable String emaili , @PathVariable int partnes){
         this.us.updateClinicsInfos(adresa, nrTel , emaili , partnes);
-        return ResponseEntity.ok("Clinic edited successfully");
+
+        return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("Clinic edited successfully").build();
+
+
     }
 
     @GetMapping("/admin/getClinic")
-    public ResponseEntity getClinicInfo(){
+    public AdminResponse getClinicInfo(){
+          List<Clinic> c = this.us.getAllC();
 
-        return ResponseEntity.ok(this.us.getAllC());
+        return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("List e suksseshme").setData(c).build();
+
     }
 
 
     @PostMapping("/admin/editDep/{depName}/{numberOfRooms}")
-    public ResponseEntity editDepInfo(@PathVariable String depName , @PathVariable int numberOfRooms){
+    public AdminResponse editDepInfo(@PathVariable String depName , @PathVariable int numberOfRooms){
         this.us.editDep(depName , numberOfRooms);
-        return ResponseEntity.ok("Department edited successfully!");
+
+        return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("Department edited successfully!").build();
+
     }
 
 }

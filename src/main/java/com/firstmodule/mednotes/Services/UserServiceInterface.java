@@ -35,6 +35,7 @@ public interface UserServiceInterface {
     void updateClinicsInfos(String address , String phone , String email , int nrPartners);
     List<Clinic> getAllC();
     void editDep(String name, int nrDhomav);
+    Optional <Clinic> getClinicByName(String name);
 
 
 }
