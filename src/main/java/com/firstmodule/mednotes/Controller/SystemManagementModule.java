@@ -41,7 +41,7 @@ public class SystemManagementModule {
         return ar;
 
     }
-
+    //ADD Patient ERROR
     @PostMapping("registerUser")
     public AdminResponse registerU(@RequestBody RegisterHelper rh) {
 
@@ -59,7 +59,7 @@ public class SystemManagementModule {
                         if (lista2.size() == 0 && lista3.size() == 0) {
                             Doctor d = new Doctor(rh.getName(), rh.getSurname(), rh.getSpecializationD(), rh.getDepartmentD(), rh.getEmail(), rh.getPassword(), dep.get(0), c.get(), rh.getPersonalNumber(), rh.getRole());
                             this.us.registerD(d);
-                           return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("Welcome to MedNotes").setData(d).build();
+                           return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("Roli:1").setData(d).build();
                         }
                         return new AdminResponse.AdminResponseBuilder<>(401).setErrorin("This email is being used by someone else").build();
 
@@ -72,7 +72,7 @@ public class SystemManagementModule {
 
                 }
             } else if (rh.getRole() == 2) {
-                Optional<Clinic> c = this.us.finClinById(3);
+                Optional<Clinic> c = this.us.getClinicByName("MedNotes");
                 List<Patient> lista = this.us.findPByPN(rh.getPersonalNumber());
                 List<Doctor> listt = this.us.findDByPN(rh.getPersonalNumber());
                 if (lista.size() == 0 && listt.size() == 0) {
@@ -82,7 +82,7 @@ public class SystemManagementModule {
                         Patient p = new Patient(rh.getName(), rh.getSurname(), rh.getEmail(), rh.getPersonalNumber(), rh.getPassword(), rh.getRole(), c.get());
 
                         this.us.registerP(p);
-                        return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("Welcome to MedNotes").setData(p).build();
+                        return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("Roli:2").setData(p).build();
                     }
                     return new AdminResponse.AdminResponseBuilder<>(401).setErrorin("This email is being used by someone else").build();
 

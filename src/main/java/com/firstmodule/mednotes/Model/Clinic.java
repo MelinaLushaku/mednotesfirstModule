@@ -40,15 +40,12 @@ public class Clinic {
 
 @Column
     private int patients;
-
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "clinic")
-    @JsonIgnore
     private Set<Patient> pat;
-    @JsonIgnore
     public Set<Patient> getPat() {
         return pat;
     }
-    @JsonIgnore
     public void setPatients(Set<Patient> pat) {
         this.pat = pat;
     }

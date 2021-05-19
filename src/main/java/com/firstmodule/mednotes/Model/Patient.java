@@ -30,10 +30,10 @@ public class Patient {
     @Column(nullable = false)
     private int role;
 
-
+    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name="clinic")
-   public Clinic clinic;
+    @JoinColumn(name="clinicId")
+    public Clinic clinic;
 
 
 
@@ -46,7 +46,7 @@ public class Patient {
        this.personalNumber=personalNumber;
        this.password=password;
        this.role=role;
- this.clinic=clinic;
+       this.clinic=clinic;
     }
 
 
@@ -102,5 +102,11 @@ public class Patient {
         this.role = role;
     }
 
+    public Clinic getClinic() {
+        return clinic;
+    }
 
+    public void setClinic(Clinic clinic) {
+        this.clinic = clinic;
+    }
 }
