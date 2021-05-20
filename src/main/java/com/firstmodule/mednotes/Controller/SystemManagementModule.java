@@ -152,15 +152,18 @@ public class SystemManagementModule {
         }
     }
 
-    @PostMapping("/admin/addDep")
+    @PostMapping("/admin/addDepartmentt")
     public AdminResponse addDepartment(@RequestBody DepartmentHelper departmentHelper) {
-        Optional<Clinic> cc = this.us.finClinById(3);
+
+        Optional<Clinic> cc = this.us.getClinicByName("MedNotes");
         List<Department> lista = this.us.findByName(departmentHelper.getDepName());
         if (lista.size() == 0) {
             Department d = new Department(departmentHelper.getDepName(), departmentHelper.getNumberOfRooms(), cc.get());
             this.us.addDepartment(d);
-            return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("Department added successfully").build();
+            return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("Department added successfully").setData(d).build();
 
+        }else if(departmentHelper.getDepName() == null){
+            return new AdminResponse.AdminResponseBuilder<>(401).setErrorin("Please fill all the inputs").build();
         }
         return new AdminResponse.AdminResponseBuilder<>(401).setErrorin("This Department Exists").build();
 
