@@ -80,7 +80,6 @@ public class SystemManagementModule {
                     List<Doctor> lista3 = this.us.findDoctorByEmail(rh.getEmail());
                     if (lista2.size() == 0 && lista3.size() == 0) {
                         Patient p = new Patient(rh.getName(), rh.getSurname(), rh.getEmail(), rh.getPersonalNumber(), rh.getPassword(), rh.getRole(), c.get());
-
                         this.us.registerP(p);
                         return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("Roli:2").setData(p).build();
                     }
@@ -233,6 +232,36 @@ public class SystemManagementModule {
         this.us.editDep(depName , numberOfRooms);
 
         return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("Department edited successfully!").build();
+
+    }
+    @GetMapping("/admin/getAllDep")
+    public AdminResponse getAllDep(){
+        List<Department> dep = this.us.findAllDep();
+        if(dep.size() !=0){
+            return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("List e suksseshme").setData(dep).build();
+        }else {
+            return new AdminResponse.AdminResponseBuilder<>(401).setErrorin("There are no departments!").build();
+        }
+
+    }
+    @GetMapping("/admin/getAllDoctors")
+    public AdminResponse getAllDoc(){
+        List<Doctor> doc = this.us.findAllD();
+        if(doc.size() !=0){
+            return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("List e suksseshme").setData(doc).build();
+        }else {
+            return new AdminResponse.AdminResponseBuilder<>(401).setErrorin("There are no doctors registered!").build();
+        }
+
+    }
+    @GetMapping("/admin/getAllPatient")
+    public AdminResponse getAllPat(){
+        List<Patient> pat = this.us.findAllP();
+        if(pat.size() !=0){
+            return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("List e suksseshme").setData(pat).build();
+        }else {
+            return new AdminResponse.AdminResponseBuilder<>(401).setErrorin("There are no patients registered!").build();
+        }
 
     }
 

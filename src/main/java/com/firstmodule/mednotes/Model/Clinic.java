@@ -38,8 +38,6 @@ public class Clinic {
     @OneToOne(mappedBy = "clinic")
     private Admin admin;
 
-@Column
-    private int patients;
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "clinic")
     private Set<Patient> pat;
@@ -70,7 +68,7 @@ public class Clinic {
 
 
 
-    public Clinic(int cID,String name,String adress, String phone, String email, int partners,int departments,int patients){
+    public Clinic(int cID,String name,String adress, String phone, String email, int partners,int departments){
         this.cID=cID;
         this.name=name;
         this.adrres=adress;
@@ -78,7 +76,7 @@ public class Clinic {
         this.email=email;
         this.partners=partners;
         this.departments=departments;
-        this.patients=patients;
+
 
 
 
@@ -111,9 +109,7 @@ public class Clinic {
         return departments;
     }
 
-  public int getPatients() {
-        return patients;
-    }
+
 
     public void setcID(int cID) {
         this.cID = cID;
@@ -139,9 +135,7 @@ public class Clinic {
         this.partners = partners;
     }
 
-    public void setPatients(int patients) {
-        this.patients = patients;
-    }
+
 
     public void setDepartments(int departments) {
         this.departments = departments;
