@@ -32,7 +32,7 @@ public class Patient {
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name="clinic")
+    @JoinColumn(name="clinicId")
     public Clinic clinic;
 
 
@@ -102,11 +102,5 @@ public class Patient {
         this.role = role;
     }
 
-    public Clinic getClinic() {
-        return clinic;
-    }
 
-    public void setClinic(Clinic clinic) {
-        this.clinic = clinic;
-    }
 }
