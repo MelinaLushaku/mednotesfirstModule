@@ -73,6 +73,7 @@ public class SystemManagementModule {
                 }
             } else if (rh.getRole() == 2) {
                 Optional<Clinic> c = this.us.getClinicByName("MedNotes");
+
                 List<Patient> lista = this.us.findPByPN(rh.getPersonalNumber());
                 List<Doctor> listt = this.us.findDByPN(rh.getPersonalNumber());
                 if (lista.size() == 0 && listt.size() == 0) {
@@ -212,9 +213,9 @@ public class SystemManagementModule {
       }
 
     }
-    @PostMapping("/admin/addClinicInfor/{adresa}/{nrTel}/{emaili}/{partnes}")
-    public AdminResponse editClinicInfo(@PathVariable String adresa , @PathVariable String nrTel , @PathVariable String emaili , @PathVariable int partnes){
-        this.us.updateClinicsInfos(adresa, nrTel , emaili , partnes);
+    @PostMapping("/admin/addClinicInfor/{adresa}/{nrTel}/{emaili}/{partners}")
+    public AdminResponse editClinicInfo(@PathVariable String adresa , @PathVariable String nrTel , @PathVariable String emaili , @PathVariable int partners){
+        this.us.updateClinicsInfos(adresa, nrTel , emaili , partners);
 
         return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("Clinic edited successfully").build();
 
@@ -223,9 +224,14 @@ public class SystemManagementModule {
 
     @GetMapping("/admin/getClinic")
     public AdminResponse getClinicInfo(){
-          List<Clinic> c = this.us.getAllC();
+         // List<Clinic> c = this.us.getAllC();
+          Optional<Clinic> c = this.us.getClinicByName("MedNotes");
+          if(c.isPresent()) {
 
-        return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("List e suksseshme").setData(c).build();
+              return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("List e suksseshme").setData(c).build();
+          }else {
+              return new AdminResponse.AdminResponseBuilder<>(401).setErrorin("Your database doesn't have info for MedNotes Clinic").build();
+          }
 
     }
 

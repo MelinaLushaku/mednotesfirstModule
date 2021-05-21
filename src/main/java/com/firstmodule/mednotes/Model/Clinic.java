@@ -38,18 +38,18 @@ public class Clinic {
     @OneToOne(mappedBy = "clinic")
     private Admin admin;
 
-    @JsonIgnore
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "clinic")
-    private Set<Patient> pat;
+    private Set<Patient> patients;
     public Set<Patient> getPat() {
-        return pat;
+        return patients;
     }
-    public void setPatients(Set<Patient> pat) {
-        this.pat = pat;
+    public void setPatients(Set<Patient> patients) {
+        this.patients = patients;
     }
 
-    @Column
-    private int departments;
+      @Column
+      private int departments;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "clinic")
     @JsonIgnore
@@ -68,19 +68,14 @@ public class Clinic {
 
 
 
-    public Clinic(int cID,String name,String adress, String phone, String email, int partners,int departments){
-        this.cID=cID;
+    public Clinic(String name,String adress, String phone, String email, int partners,int departments){
+
         this.name=name;
         this.adrres=adress;
         this.phone=phone;
         this.email=email;
         this.partners=partners;
         this.departments=departments;
-
-
-
-
-
 
     }
     public  int getcID(){
@@ -111,9 +106,6 @@ public class Clinic {
 
 
 
-    public void setcID(int cID) {
-        this.cID = cID;
-    }
 
     public void setName(String name) {
         this.name = name;

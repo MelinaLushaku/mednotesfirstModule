@@ -49,7 +49,6 @@ public class Patient {
        this.clinic=clinic;
     }
 
-
     public int getpId() {
         return pId;
     }
