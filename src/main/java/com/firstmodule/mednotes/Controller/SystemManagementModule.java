@@ -169,7 +169,6 @@ public class SystemManagementModule {
 
     }
 
-    //error per pk edhe fk
     @PostMapping("/admin/deleteDep/{depName}")
     public AdminResponse deleteDepartment(@PathVariable String depName) {
         List<Department> dep = this.us.findByName(depName);
@@ -187,13 +186,13 @@ public class SystemManagementModule {
      List<Advertisement> l = this.us.getByTitle(advertName);
      if(l.size() != 0){
          this.us.deleteAdvert(l.get(0));
-         return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("Advertisement with title"+advertName+"is deleted successfully!").build();
+         return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("Advertisement with title "+advertName+" is deleted successfully!").build();
 
      }
         return new AdminResponse.AdminResponseBuilder<>(401).setErrorin("Advertisement with title"+advertName+"doesn't exists!").build();
 
     }
-
+    //error te shtimi
     @PostMapping("/admin/addAdvert/{advertName}/{aPath}")
     public AdminResponse addAdvert(@PathVariable String advertName, @PathVariable String aPath) {
       List<Advertisement> l = this.us.getByTitle(advertName);
@@ -204,6 +203,7 @@ public class SystemManagementModule {
       }
       else{
           Admin a = this.us.getByName("Admin");
+
           Advertisement d = new Advertisement(advertName, aPath , a);
           this.us.addAdvert(d);
           return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("Advertisement added successfully").setData(d).build();
@@ -232,9 +232,14 @@ public class SystemManagementModule {
 
     @PostMapping("/admin/editDep/{depName}/{numberOfRooms}")
     public AdminResponse editDepInfo(@PathVariable String depName , @PathVariable int numberOfRooms){
-        this.us.editDep(depName , numberOfRooms);
+        List<Department> dep = this.us.findByName(depName);
+        if(dep.size() !=0) {
+            this.us.editDep(depName, numberOfRooms);
 
-        return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("Department edited successfully!").build();
+            return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("Department edited successfully!").build();
+        }else {
+            return new AdminResponse.AdminResponseBuilder<>(401).setErrorin("Department you want do edit doesn't exists!").build();
+        }
 
     }
     @GetMapping("/admin/getAllDep")
