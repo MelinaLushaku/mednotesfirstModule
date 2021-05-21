@@ -22,14 +22,12 @@ public class Admin {
     @JoinColumn(name = "clinic_id")
     private Clinic clinic;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "admin")
-    @JsonIgnore
     private Set<Advertisement> add;
-    @JsonIgnore
     public Set<Advertisement> getAdvertisement() {
         return add;
     }
-    @JsonIgnore
     public void setDoctors(Set<Advertisement> add) {
         this.add = add;
     }

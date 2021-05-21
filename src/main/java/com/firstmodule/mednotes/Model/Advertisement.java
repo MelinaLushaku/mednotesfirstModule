@@ -16,10 +16,11 @@ public class Advertisement {
 
     @Column(nullable=false)
     private String aPath;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name="admin")
-    public Admin admin;
+    private Admin admin;
 
 
     public  Advertisement(){}

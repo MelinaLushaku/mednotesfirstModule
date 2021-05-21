@@ -38,6 +38,7 @@ public class Doctor {
     @ManyToOne
     @JoinColumn(name="depId")
     private Department department;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name="clinicId")

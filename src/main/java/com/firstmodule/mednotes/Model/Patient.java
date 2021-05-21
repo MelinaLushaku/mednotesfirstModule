@@ -33,7 +33,7 @@ public class Patient {
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name="clinicId")
-    public Clinic clinic;
+    private Clinic clinic;
 
 
 

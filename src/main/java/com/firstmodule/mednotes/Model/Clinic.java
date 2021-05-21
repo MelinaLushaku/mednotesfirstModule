@@ -38,7 +38,7 @@ public class Clinic {
     @OneToOne(mappedBy = "clinic")
     private Admin admin;
 
-
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "clinic")
     private Set<Patient> patients;
     public Set<Patient> getPat() {
