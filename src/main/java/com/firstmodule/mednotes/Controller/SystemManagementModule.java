@@ -41,8 +41,8 @@ public class SystemManagementModule {
         return ar;
 
     }
-    //ADD Patient ERROR
-    @PostMapping("registerUser")
+
+    @PostMapping("/registerUser")
     public AdminResponse registerU(@RequestBody RegisterHelper rh) {
 
         if (!rh.getName().isEmpty() && !rh.getSurname().isEmpty() && !rh.getEmail().isEmpty() && !rh.getPassword().isEmpty() && rh.getPersonalNumber() != 0) {
