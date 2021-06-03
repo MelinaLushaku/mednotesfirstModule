@@ -11,7 +11,7 @@ import javax.print.Doc;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:8080")
+
 @RestController
 @RequestMapping("/api/systemManagement")
 public class SystemManagementModule {
@@ -275,6 +275,26 @@ public class SystemManagementModule {
             return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("List e suksseshme").setData(pat).build();
         }else {
             return new AdminResponse.AdminResponseBuilder<>(401).setErrorin("There are no patients registered!").build();
+        }
+
+    }
+    @GetMapping("/admin/PatientByPersonal/{nrPersonal}")
+    public Patient getPatientByPersonal(@PathVariable int nrPersonal){
+        List<Patient> lista = this.us.findPByPN(nrPersonal);
+        if(lista.size() == 0){
+            return null;
+        }else{
+            return lista.get(0);
+        }
+
+    }
+    @GetMapping("/admin/DoctortByPersonal/{doctorPersonalNumber}")
+    public Doctor getDoctorByPersonal(@PathVariable int doctorPersonalNumber){
+        List<Doctor> lista = this.us.findDByPN(doctorPersonalNumber);
+        if(lista.size() == 0){
+            return null;
+        }else{
+            return lista.get(0);
         }
 
     }
