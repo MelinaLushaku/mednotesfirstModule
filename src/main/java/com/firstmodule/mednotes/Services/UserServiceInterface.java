@@ -36,6 +36,7 @@ public interface UserServiceInterface {
     List<Clinic> getAllC();
     void editDep(String name, int nrDhomav);
     Optional <Clinic> getClinicByName(String name);
+    List<Doctor> getDocByDep(int depId);
 
 
 }

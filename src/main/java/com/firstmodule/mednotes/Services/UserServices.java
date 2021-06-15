@@ -181,5 +181,11 @@ public class UserServices implements UserServiceInterface {
     public Optional <Clinic> getClinicByName(String name){
         return  this.clinicRepository.getClinicByName(name);
     }
+
+    @Override
+    public List<Doctor> getDocByDep(int depId){
+        List<Doctor> list = this.doctorRepository.findDByDepartment(depId);
+        return list;
+    }
 }
 

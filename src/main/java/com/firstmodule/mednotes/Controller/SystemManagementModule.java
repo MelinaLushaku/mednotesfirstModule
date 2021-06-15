@@ -299,5 +299,16 @@ public class SystemManagementModule {
 
     }
 
+    @GetMapping("/patient/getDoctortByDep/{depNumber}")
+    public AdminResponse getDoctorByDep(@PathVariable int depNumber){
+        List<Doctor> lista = this.us.getDocByDep(depNumber);
+        if(lista.size() == 0){
+            return new AdminResponse.AdminResponseBuilder<>(401).setErrorin("there are no doctors in dis department!").build();
+        }else{
+            return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("list e sukseshsme").setData(lista).build();
+        }
+
+    }
+
 }
 
