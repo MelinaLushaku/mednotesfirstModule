@@ -37,6 +37,6 @@ public interface UserServiceInterface {
     void editDep(String name, int nrDhomav);
     Optional <Clinic> getClinicByName(String name);
     List<Doctor> getDocByDep(int depId);
-
+    List<Doctor>searchDoctorByName(String name);
 
 }
