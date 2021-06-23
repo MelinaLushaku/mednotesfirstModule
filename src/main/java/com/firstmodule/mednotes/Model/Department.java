@@ -18,12 +18,11 @@ public class Department {
     @Column(nullable = false)
     private int numOfRooms;
 
-    @JsonIgnore
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "department")
     private Set<Doctor> doc;
     public Set<Doctor> getDoc() {
-        return doc;
-    }
+        return doc;}
     public void setDoctors(Set<Doctor> doc) {
         this.doc = doc;
     }

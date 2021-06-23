@@ -39,7 +39,7 @@ public class Doctor {
     @JoinColumn(name="depId")
     private Department department;
 
-    @JsonIgnore
+  //  @JsonIgnore
     @ManyToOne
     @JoinColumn(name="clinicId")
     private Clinic clinic;
