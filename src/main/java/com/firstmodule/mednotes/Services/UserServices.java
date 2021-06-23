@@ -89,6 +89,12 @@ public class UserServices implements UserServiceInterface {
         return lista;
     }
     @Override
+    public List<Doctor>searchDoctorByName(String name){
+        List<Doctor>lista=this.doctorRepository.searchDoctorByName(name);
+        return lista;
+    }
+
+    @Override
     public void deleteDoctor(Doctor d){
         this.doctorRepository.delete(d);
 
@@ -187,5 +193,7 @@ public class UserServices implements UserServiceInterface {
         List<Doctor> list = this.doctorRepository.findDByDepartment(depId);
         return list;
     }
+
+
 }
 

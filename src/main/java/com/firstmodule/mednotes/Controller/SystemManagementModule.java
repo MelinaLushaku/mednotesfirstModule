@@ -309,6 +309,16 @@ public class SystemManagementModule {
         }
 
     }
+    @GetMapping("/doctor/searchDoctor/{name}")
+    public Doctor searchDoc(String doctorName){
+        List<Doctor>lista=this.us.searchDoctorByName(doctorName);
+        if (lista.size()==0){
+            return null;
+        }else {
+            return lista.get(0);
+        }
+
+    }
 
 }
 

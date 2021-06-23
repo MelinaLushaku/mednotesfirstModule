@@ -22,6 +22,8 @@ public interface DoctorRepository extends JpaRepository<Doctor, Integer> {
     @Query("select d from Doctor d where d.department=?1 ")
     List<Doctor> findDByDepartment(int department);
 
+    @Query("select a from  Doctor a where a.doctorName=?1")
+    List<Doctor>searchDoctorByName(String name);
 
 
 
