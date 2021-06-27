@@ -11,7 +11,7 @@ import javax.print.Doc;
 import java.util.List;
 import java.util.Optional;
 
-
+@CrossOrigin(origins = "http://localhost:9000/", maxAge = 3600)
 @RestController
 @RequestMapping("/api/systemManagement")
 public class SystemManagementModule {
