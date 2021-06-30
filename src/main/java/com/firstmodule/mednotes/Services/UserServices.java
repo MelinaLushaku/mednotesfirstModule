@@ -194,6 +194,24 @@ public class UserServices implements UserServiceInterface {
         return list;
     }
 
+    @Override
+    public void editPatById(int personalN, String blood , float height , float weight){
+        List<Patient> pat = this.patientRepository.findPByPersonalNumber(personalN);
+        Patient p = pat.get(0);
+        p.setBloodG(blood);
+        p.setHeight(height);
+        p.setWeight(weight);
+        this.patientRepository.save(p);
+    }
+    @Override
+    public  void editDocById(int personalN ,String sp){
+        List<Doctor> doc = this.doctorRepository.findDByPersonalNumber(personalN);
+        Doctor doctor = doc.get(0);
+        String spe = doctor.getDoctorSpecialization();
+        doctor.setDoctorSpecialization(spe+", "+sp);
+        this.doctorRepository.save(doctor);
+
+    }
 
 }
 

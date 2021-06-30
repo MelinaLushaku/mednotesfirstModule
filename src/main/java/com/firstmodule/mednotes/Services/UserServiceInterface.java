@@ -38,5 +38,7 @@ public interface UserServiceInterface {
     Optional <Clinic> getClinicByName(String name);
     List<Doctor> getDocByDep(int depId);
     List<Doctor>searchDoctorByName(String name);
+    void editPatById(int personalN ,String blood, float height , float weight);
+    void editDocById(int personalN ,String sp);
 
 }

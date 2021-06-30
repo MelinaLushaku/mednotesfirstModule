@@ -5,6 +5,7 @@ package com.firstmodule.mednotes.Model;
 import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Set;
 
 
@@ -30,6 +31,15 @@ public class Patient {
     @Column(nullable = false)
     private int role;
 
+    @Column(nullable=true)
+    private String bloodG;
+
+    @Column(nullable=true)
+    private float height;
+
+    @Column(nullable=true)
+    private float weight;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name="clinicId")
@@ -39,14 +49,14 @@ public class Patient {
 
     public Patient(){}
 
-    public Patient (String name, String surname,String email,int personalNumber,String password,int role, Clinic clinic){
-       this.name=name;
-       this.surname=surname;
-       this.email=email;
-       this.personalNumber=personalNumber;
-       this.password=password;
-       this.role=role;
-       this.clinic=clinic;
+    public Patient (PatientBuilder patientBuilder){
+       this.name=patientBuilder.name;
+       this.surname=patientBuilder.surname;
+       this.email=patientBuilder.email;
+       this.personalNumber=patientBuilder.personalNumber;
+       this.password=patientBuilder.password;
+       this.role=patientBuilder.role;
+       this.clinic=patientBuilder.clinic;
     }
 
     public int getpId() {
@@ -76,6 +86,29 @@ public class Patient {
         return role;
     }
 
+    public String getBloodG() {
+        return bloodG;
+    }
+
+    public void setBloodG(String bloodG) {
+        this.bloodG = bloodG;
+    }
+
+    public float getHeight() {
+        return height;
+    }
+
+    public void setHeight(float height) {
+        this.height = height;
+    }
+
+    public float getWeight() {
+        return weight;
+    }
+
+    public void setWeight(float weight) {
+        this.weight = weight;
+    }
 
     public void setName(String name) {
         this.name = name;
@@ -101,5 +134,45 @@ public class Patient {
         this.role = role;
     }
 
+    public  static  class  PatientBuilder{
 
+        private String name;
+        private String surname;
+        private String email;
+        private int personalNumber;
+        private String password;
+        private int role;
+        private String bloodG;
+        private float height;
+        private float weight;
+        @JsonIgnore
+        private Clinic clinic;
+
+        public PatientBuilder(String name, String surname,String email,int personalNumber,String password,int role, Clinic clinic){
+            this.name=name;
+            this.surname=surname;
+            this.email=email;
+            this.personalNumber=personalNumber;
+            this.password=password;
+            this.role=role;
+            this.clinic=clinic;
+        }
+
+        public PatientBuilder setbloodG(String bloodG){
+            this.bloodG = bloodG;
+            return this;
+        }
+        public PatientBuilder setHeight(float height){
+            this.height = height;
+            return this;
+        }
+        public PatientBuilder setWeight(float weight){
+            this.weight = weight;
+            return this;
+        }
+        public Patient build(){
+            return new Patient(this);
+        }
+
+    }
 }

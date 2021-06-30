@@ -6,8 +6,10 @@ import com.firstmodule.mednotes.Helper.RegisterHelper;
 import com.firstmodule.mednotes.Model.*;
 import com.firstmodule.mednotes.Services.UserServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import javax.print.Doc;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
 
@@ -80,7 +82,7 @@ public class SystemManagementModule {
                     List<Patient> lista2 = this.us.findPatientByEmail(rh.getEmail());
                     List<Doctor> lista3 = this.us.findDoctorByEmail(rh.getEmail());
                     if (lista2.size() == 0 && lista3.size() == 0) {
-                        Patient p = new Patient(rh.getName(), rh.getSurname(), rh.getEmail(), rh.getPersonalNumber(), rh.getPassword(), rh.getRole(), c.get());
+                        Patient p = new Patient.PatientBuilder(rh.getName(), rh.getSurname(), rh.getEmail(), rh.getPersonalNumber(), rh.getPassword(), rh.getRole(), c.get()).setbloodG("NotSpecified").setHeight(0).setWeight(0).build();
                         this.us.registerP(p);
                         return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("Roli:2").setData(p).build();
                     }
@@ -319,6 +321,25 @@ public class SystemManagementModule {
         }
 
     }
+
+    @GetMapping("/patient/editProfile/{pId}/{blood}/{w}/{h}")
+    public AdminResponse editPat(@PathVariable int pId , @PathVariable String blood , @PathVariable float w , @PathVariable float h){
+        List<Patient> pat = this.us.findPByPN(pId);
+        if(pat.size() != 0){
+            this.us.editPatById(pId, blood, h, w);
+            return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("Your profile is edited succesfully!").build();
+        }
+        return  new AdminResponse.AdminResponseBuilder<>(401).setErrorin("We couldn't ipdate your info! Please try again!").build();
+    }
+
+    @PostMapping("/doctor/editP/{docId}/{specialization}")
+    public AdminResponse editDoc(@PathVariable int docId , @PathVariable String specialization){
+        List<Doctor> lista = this.us.findDByPN(docId);
+        if(lista.size() != 0){
+            this.us.editDocById(docId, specialization);
+            return  new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("Edited succesfully!").build();
+        }
+        return new AdminResponse.AdminResponseBuilder<>(401).setErrorin("This user doesnt exists!").build();}
 
 }
 
