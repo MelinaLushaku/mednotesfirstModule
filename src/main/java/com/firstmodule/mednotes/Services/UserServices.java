@@ -90,7 +90,7 @@ public class UserServices implements UserServiceInterface {
     }
     @Override
     public List<Doctor>searchDoctorByName(String name){
-        List<Doctor>lista=this.doctorRepository.searchDoctorByName(name);
+        List<Doctor>lista=this.doctorRepository.searchDocByName(name);
         return lista;
     }
 

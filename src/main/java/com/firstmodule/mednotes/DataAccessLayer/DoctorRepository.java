@@ -23,7 +23,7 @@ public interface DoctorRepository extends JpaRepository<Doctor, Integer> {
     List<Doctor> findDByDepartment(int department);
 
     @Query("select a from  Doctor a where a.doctorName=?1")
-    List<Doctor>searchDoctorByName(String name);
+    List<Doctor>searchDocByName(String name);
 
 
 

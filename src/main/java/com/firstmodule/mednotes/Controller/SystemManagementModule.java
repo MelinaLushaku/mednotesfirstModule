@@ -309,13 +309,13 @@ public class SystemManagementModule {
         }
 
     }
-    @GetMapping("/doctor/searchDoctor/{name}")
-    public Doctor searchDoc(String doctorName){
+    @GetMapping("/doctor/searchDoctor/{doctorName}")
+    public AdminResponse searchDoc(@PathVariable String doctorName){
         List<Doctor>lista=this.us.searchDoctorByName(doctorName);
-        if (lista.size()==0){
-            return null;
-        }else {
-            return lista.get(0);
+        if(lista.size() == 0){
+            return new AdminResponse.AdminResponseBuilder<>(401).setErrorin("there are no doctors !").build();
+        }else{
+            return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("list e sukseshsme").setData(lista).build();
         }
 
     }
