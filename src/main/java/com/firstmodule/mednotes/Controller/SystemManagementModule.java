@@ -260,6 +260,15 @@ public class SystemManagementModule {
         }
 
     }
+    @GetMapping("/admin/getAllAdvert")
+    public AdminResponse getAllAdvert(){
+        List<Advertisement>adv=this.us.findAllAdvert();
+        if(adv.size()!=0){
+            return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("List e suksseshme").setData(adv).build();
+        }else{
+            return new AdminResponse.AdminResponseBuilder<>(401).setErrorin("Lista e zbrazet").build();
+        }
+    }
     @GetMapping("/admin/getAllDoctors")
     public AdminResponse getAllDoc(){
         List<Doctor> doc = this.us.findAllD();

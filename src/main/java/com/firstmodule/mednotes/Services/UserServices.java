@@ -111,7 +111,8 @@ public class UserServices implements UserServiceInterface {
     public List<Patient> findAllP(){
         return this.patientRepository.findAll();
     }
-
+    @Override
+    public List<Advertisement>findAllAdvert(){return this.advertisementRepository.findAll();}
     @Override
     public int getTotalDoctor(){
         List <Doctor> doc = this.doctorRepository.findAll();
