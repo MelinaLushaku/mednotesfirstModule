@@ -19,7 +19,7 @@ import java.util.Optional;
 public class SystemManagementModule {
     @Autowired
     private UserServiceInterface us;
-
+//done
     @PostMapping("/login/{email}/{password}")
     public AdminResponse loginUser(@PathVariable String email, @PathVariable String password) {
         Optional<Admin> a = us.loginA(email, password);
@@ -43,7 +43,7 @@ public class SystemManagementModule {
         return ar;
 
     }
-
+//done
     @PostMapping("/registerUser")
     public AdminResponse registerU(@RequestBody RegisterHelper rh) {
 
@@ -97,7 +97,7 @@ public class SystemManagementModule {
          return new AdminResponse.AdminResponseBuilder<>(401).setErrorin("Please fill all the input fields").build();
 
     }
-
+//done
     @PostMapping("/admin/deleteUser/{personalNumber}")
     public AdminResponse deleteUser(@PathVariable int personalNumber) {
         List<Doctor> doc = this.us.findDByPN(personalNumber);
@@ -117,19 +117,19 @@ public class SystemManagementModule {
         }
 
     }
-
+//done
     @GetMapping("/admin/totalNumberOfDoc")
     public AdminResponse totalDoc() {
         int totalD = this.us.getTotalDoctor();
          return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("Vlere e Suksesshme").setData(totalD).build();
     }
-
+//done
     @GetMapping("/admin/totalNumberOfPat")
     public AdminResponse totalPat() {
         int totalP = this.us.getTotalPatient();
        return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("Vlere e sukseshme").setData(totalP).build();
     }
-
+//done
     @GetMapping("/admin/totalNumberOfUser")
     public AdminResponse totalUsers() {
         int totalD = this.us.getTotalDoctor();
@@ -137,14 +137,14 @@ public class SystemManagementModule {
         int totalU = totalD + totalP;
         return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("Vlere e sukseshme").setData(totalU).build();
     }
-
+//done
     @GetMapping("/admin/totalNumberOfDep")
     public AdminResponse totalDep() {
         int totalDep = this.us.getTotalDep();
         return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("Vlere e sukseshme").setData(totalDep).build();
     }
 
-
+//done
     @GetMapping("/admin/ListOfDep")
     public AdminResponse listOfDep() {
         List<Department> list = this.us.findAllDep();
@@ -154,7 +154,7 @@ public class SystemManagementModule {
             return new AdminResponse.AdminResponseBuilder<>(201).setMesazhin("List e sukseshme").setData(list).build();
         }
     }
-
+//done
     @PostMapping("/admin/addDepartmentt")
     public AdminResponse addDepartment(@RequestBody DepartmentHelper departmentHelper) {
 
@@ -171,7 +171,7 @@ public class SystemManagementModule {
         return new AdminResponse.AdminResponseBuilder<>(401).setErrorin("This Department Exists").build();
 
     }
-
+//done
     @PostMapping("/admin/deleteDep/{depName}")
     public AdminResponse deleteDepartment(@PathVariable String depName) {
         List<Department> dep = this.us.findByName(depName);
@@ -183,7 +183,7 @@ public class SystemManagementModule {
         return new AdminResponse.AdminResponseBuilder<>(401).setErrorin("This department doesn't exists!").build();
 
     }
-
+//done
     @PostMapping("/admin/deleteAdvert/{advertName}")
     public AdminResponse deleteAdvert(@PathVariable String advertName) {
      List<Advertisement> l = this.us.getByTitle(advertName);
@@ -195,7 +195,7 @@ public class SystemManagementModule {
         return new AdminResponse.AdminResponseBuilder<>(401).setErrorin("Advertisement with title"+advertName+"doesn't exists!").build();
 
     }
-    //error te shtimi
+//done
     @PostMapping("/admin/addAdvert/{advertName}/{aPath}")
     public AdminResponse addAdvert(@PathVariable String advertName, @PathVariable String aPath) {
       List<Advertisement> l = this.us.getByTitle(advertName);
@@ -215,6 +215,7 @@ public class SystemManagementModule {
       }
 
     }
+    //done
     @PostMapping("/admin/addClinicInfor/{adresa}/{nrTel}/{emaili}/{partners}")
     public AdminResponse editClinicInfo(@PathVariable String adresa , @PathVariable String nrTel , @PathVariable String emaili , @PathVariable int partners){
         this.us.updateClinicsInfos(adresa, nrTel , emaili , partners);
@@ -223,7 +224,7 @@ public class SystemManagementModule {
 
 
     }
-
+//done
     @GetMapping("/admin/getClinic")
     public AdminResponse getClinicInfo(){
          // List<Clinic> c = this.us.getAllC();
@@ -237,7 +238,7 @@ public class SystemManagementModule {
 
     }
 
-
+//done
     @PostMapping("/admin/editDep/{depName}/{numberOfRooms}")
     public AdminResponse editDepInfo(@PathVariable String depName , @PathVariable int numberOfRooms){
         List<Department> dep = this.us.findByName(depName);
@@ -250,6 +251,7 @@ public class SystemManagementModule {
         }
 
     }
+//done
     @GetMapping("/admin/getAllDep")
     public AdminResponse getAllDep(){
         List<Department> dep = this.us.findAllDep();
@@ -260,6 +262,7 @@ public class SystemManagementModule {
         }
 
     }
+    //done
     @GetMapping("/admin/getAllAdvert")
     public AdminResponse getAllAdvert(){
         List<Advertisement>adv=this.us.findAllAdvert();
@@ -269,6 +272,7 @@ public class SystemManagementModule {
             return new AdminResponse.AdminResponseBuilder<>(401).setErrorin("Lista e zbrazet").build();
         }
     }
+    //done
     @GetMapping("/admin/getAllDoctors")
     public AdminResponse getAllDoc(){
         List<Doctor> doc = this.us.findAllD();
@@ -279,6 +283,7 @@ public class SystemManagementModule {
         }
 
     }
+    //done
     @GetMapping("/admin/getAllPatient")
     public AdminResponse getAllPat(){
         List<Patient> pat = this.us.findAllP();
@@ -289,6 +294,7 @@ public class SystemManagementModule {
         }
 
     }
+    //done
     @GetMapping("/admin/PatientByPersonal/{nrPersonal}")
     public Patient getPatientByPersonal(@PathVariable int nrPersonal){
         List<Patient> lista = this.us.findPByPN(nrPersonal);
@@ -299,6 +305,7 @@ public class SystemManagementModule {
         }
 
     }
+    //done
     @GetMapping("/admin/DoctortByPersonal/{doctorPersonalNumber}")
     public Doctor getDoctorByPersonal(@PathVariable int doctorPersonalNumber){
         List<Doctor> lista = this.us.findDByPN(doctorPersonalNumber);
@@ -309,7 +316,7 @@ public class SystemManagementModule {
         }
 
     }
-
+//done
     @GetMapping("/patient/getDoctortByDep/{depNumber}")
     public AdminResponse getDoctorByDep(@PathVariable int depNumber){
         List<Doctor> lista = this.us.getDocByDep(depNumber);
@@ -320,6 +327,7 @@ public class SystemManagementModule {
         }
 
     }
+    //almost done
     @GetMapping("/doctor/searchDoctor/{doctorName}")
     public AdminResponse searchDoc(@PathVariable String doctorName){
         List<Doctor>lista=this.us.searchDoctorByName(doctorName);
@@ -330,7 +338,7 @@ public class SystemManagementModule {
         }
 
     }
-
+//done
     @GetMapping("/patient/editProfile/{pId}/{blood}/{w}/{h}")
     public AdminResponse editPat(@PathVariable int pId , @PathVariable String blood , @PathVariable float w , @PathVariable float h){
         List<Patient> pat = this.us.findPByPN(pId);
@@ -340,7 +348,7 @@ public class SystemManagementModule {
         }
         return  new AdminResponse.AdminResponseBuilder<>(401).setErrorin("We couldn't ipdate your info! Please try again!").build();
     }
-
+//done
     @PostMapping("/doctor/editP/{docId}/{specialization}")
     public AdminResponse editDoc(@PathVariable int docId , @PathVariable String specialization){
         List<Doctor> lista = this.us.findDByPN(docId);
